@@ -196,14 +196,3 @@ var Cloak = Graft.AttributeDirective.extend({
 Graft.Directives.registerAttribute('xe-cloak', Cloak);
   
 ```
-
-#### A Example app
----
-
-
-```html
-<div id="crappy-app">
-  <h1>Hi crappy app here</h1>
-  <p>Enter your name here: <xe-input data-attribute="name" /></p>
-</div>
-```
