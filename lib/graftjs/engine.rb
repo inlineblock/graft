@@ -1,4 +1,4 @@
-module Graft
+module Graftjs
   class Engine < Rails::Engine
     
     ASSET_DIRECTORIES = %w( src ).freeze
@@ -7,22 +7,22 @@ module Graft
     # Save this block, we'll use it in two calls to .initializer
     add_paths_block = lambda { |app|
 
-      ::Graft::Engine::ASSET_DIRECTORIES.each do |dir|
-        app.config.assets.paths << ::File.expand_path("#{::Graft::Engine.gem_dir}/#{dir}", __FILE__)
+      ::Graftjs::Engine::ASSET_DIRECTORIES.each do |dir|
+        app.config.assets.paths << ::File.expand_path("#{::Graftjs::Engine.gem_dir}/#{dir}", __FILE__)
       end
 
       if Rails.env =~ /development|test|sandbox/
-          ::Graft::Engine::TEST_DIRECTORIES.each do |dir|
-            app.config.assets.paths << ::File.expand_path("#{::Graft::Engine.gem_dir}/#{dir}", __FILE__)
+          ::Graftjs::Engine::TEST_DIRECTORIES.each do |dir|
+            app.config.assets.paths << ::File.expand_path("#{::Graftjs::Engine.gem_dir}/#{dir}", __FILE__)
           end
       end
     }
 
     # Standard initializer
-    initializer 'graft.update_asset_paths', &add_paths_block
+    initializer 'graftjs.update_asset_paths', &add_paths_block
 
     # Special initializer lets us precompile assets without fully initializing
-    initializer 'graft.update_asset_paths', :group => :assets,
+    initializer 'graftjs.update_asset_paths', :group => :assets,
                 &add_paths_block
     
     def self.gem_dir

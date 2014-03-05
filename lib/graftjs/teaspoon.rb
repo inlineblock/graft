@@ -3,7 +3,7 @@
     suite.boot_partial = "require_js"
     suite.helper = "graft_spec_helper"
 
-    suite.matcher = "#{::File.join(::Graft::Engine.gem_dir , 'specs')}/**/*_spec.js"
+    suite.matcher = "#{::File.join(::Graftjs::Engine.gem_dir , 'specs')}/**/*_spec.js"
     suite.javascripts = ["teaspoon-mocha"]
     suite.stylesheets = ["teaspoon"]
   end
