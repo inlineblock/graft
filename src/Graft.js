@@ -2,10 +2,30 @@
 
   // Set up just like Backbone appropriately for the environment. Start with AMD.
   if (typeof define === 'function' && define.amd) {
-    define(['backbone', 'underscore', 'jquery'], function(Backbone, _, $) {
+    var requires = [],
+      backboneIndex = -1,
+      underscoreIndex = -1,
+      jqueryIndex = -1;
+    if (!root.Backbone) {
+      requires.push('backbone');
+      backboneIndex = requires.length-1;
+    }
+    if (!root._) {
+      requires.push('underscore');
+      underscoreIndex = requires.length-1;
+    }
+    if (!root.$) {
+      requires.push('jquery');
+      jqueryIndex = requires.length-1;
+    }
+    define(requires, function () {
       // Export global even in AMD case in case this script is loaded with
       // others that may still expect a global Backbone.
-      return factory(root, Backbone, _, $);
+      return factory(root,
+                     backboneIndex   > -1 ? arguments[backboneIndex]   : root.Backbone,
+                     underscoreIndex > -1 ? arguments[underscoreIndex] : root._,
+                     jqueryIndex     > -1 ? arguments[jqueryIndex]     : root.$
+                    );
     });
 
   // Next for Node.js or CommonJS. jQuery may not be needed as a module.
