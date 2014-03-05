@@ -1,4 +1,4 @@
-define(['Graft/Graft'], function (Graft) {
+define(['Graft'], function (Graft) {
   describe('AttributeDirective', function () {
     beforeEach(function () {
       this.el = document.createElement('div');

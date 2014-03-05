@@ -1,4 +1,4 @@
-define(['Graft/Graft'], function (Graft) {
+define(['Graft'], function (Graft) {
   describe('Register', function () {
     beforeEach(function () {
       this.register = new Graft.Register();

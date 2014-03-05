@@ -1,4 +1,4 @@
-define(['Graft/Graft'], function (Graft) {
+define(['Graft'], function (Graft) {
   describe('Tools', function () {
 
     describe('#parseAttributeFromString', function () {

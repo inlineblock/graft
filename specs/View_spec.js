@@ -1,4 +1,4 @@
-define(['Graft/Graft'] , function (Graft) {
+define(['Graft'] , function (Graft) {
   describe('View' , function () {
     beforeEach(function () {
       this.view = new Graft.View();
