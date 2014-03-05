@@ -9,6 +9,74 @@ Graft itself does not have any directives in it, but does provide a base View (G
 ---
 Graft.View is the base view you would use, instead of Backbone.View, if you wanted to get the advantages of directives. It also has defined lifecycle and its own methods for appending subviews, so that the subviews automatically get cleaned up.
 
+#### Passing options to a view class via the DOM
+
+##### Automatically passed items
+* this.model
+* this.collection
+* this.$parentScope in the created child, is the View that created it.
+
+##### View's (element tagName)
+Anything attribute that is prefixed via data- will become an options when the Directive View is created.
+
+
+So lets say you wanted a ng-model like binding where you pass it a model and it will listen to a certain model attribute and do two-way binding.
+
+```javascript
+  var MyInput = Graft.View.extend({
+
+    tagName: 'input',
+
+    className: 'my-input',
+
+    events: {
+      'change': 'onInputChange'
+    },
+
+    options: {
+      attribute: '',
+      autoSave: false
+    },
+
+    attach: function () {
+      // listen change:attribute
+      this.listenTo(this.model, 'change:' + this.options.attribute, this.onModelChange);
+    },
+
+    getModelValue: function () {
+      this.model.get(this.options.attribute);
+    },
+    
+    onInputChange: function () {
+      this.model.set(this.options.attribute, this.$el.val());
+      if (this.options.autoSave) {
+        this.model.save();
+      }
+    },
+
+    onModelChange: function () {
+      this.render();
+    },
+
+    render: function () {
+      this.$el.val(this.getModelValue());
+    }
+  });
+  Graft.Directives.registerElement('my-input', MyInput);
+```
+
+```html
+  <my-input data-attribute="name" data-auto-save="true"></my-input>
+```
+
+That my-input tag will get REMOVED and replaced with the MyInput view's element.
+
+##### Attributes (element attribute)
+If it is a Attribute Directive, you can do the attribute value and will will accessible via "this.directiveValue". You can also access the matched attribute as "this.matchedAttribute".
+```html
+  <div my-custom-attribute="hello"></div>
+```
+
 #### Graft View's Lifecyle
 setup -> build -> attach -> render
 
@@ -127,4 +195,15 @@ var Cloak = Graft.AttributeDirective.extend({
 });
 Graft.Directives.registerAttribute('xe-cloak', Cloak);
   
+```
+
+#### A Example app
+---
+
+
+```html
+<div id="crappy-app">
+  <h1>Hi crappy app here</h1>
+  <p>Enter your name here: <xe-input data-attribute="name" /></p>
+</div>
 ```
