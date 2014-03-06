@@ -483,9 +483,9 @@
     },
 
     _transcludeElements: function (elements) {
-      // so if the gr-transclude isn't found, we use add to include the current element
+      // so if the transclude isn't found, we use add to include the current element
       // which then makes it append to itself.
-      this.$('[gr-transclude]').add(this.el).first().append(elements);
+      this.$('[transclude]').add(this.el).first().append(elements);
       return this;
     },
 

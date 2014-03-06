@@ -316,7 +316,7 @@ define(['Graft'] , function (Graft) {
       beforeEach(function () {
         this.transcludableKlass = Graft.View.extend({
           transclude: true,
-          template: '<div class="one"></div><div class="two basket" gr-transclude></div>'
+          template: '<div class="one"></div><div class="two basket" transclude></div>'
         });
         Graft.Directives.registerElement('transcludable', this.transcludableKlass);
       });

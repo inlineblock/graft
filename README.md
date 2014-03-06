@@ -101,7 +101,7 @@ var myViewInstance = new MyView({
 });
 ```
 
-* transclude: This is similar to the [transclude option in angular's directives](http://docs.angularjs.org/api/ng/directive/ngTransclude). If this is true and this Graft.View is an automatically created via directive, it will take the transcludedElements (this.options.transcludedElements) and try to find a gr-transclude attribute in a child element and append those elements to it. If it cannot find a child with that attribute, it will append the items to itself. You can overrdie this behavior by overriding the _transcludeElements method in your view.
+* transclude: This is similar to the [transclude option in angular's directives](http://docs.angularjs.org/api/ng/directive/ngTransclude). If this is true and this Graft.View is an automatically created via directive, it will take the transcludedElements (this.options.transcludedElements) and try to find a child element with the attribute transclude attribute and append those elements to it. If it cannot find a child with that attribute, it will append the items to itself. You can overrdie this behavior by overriding the _transcludeElements method in your view.
 * services: An array of strings that are "services" you have registered with Graft.Directives.registerService, that you want to accessible via this.
 
 
