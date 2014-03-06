@@ -110,18 +110,14 @@
       });
     },
 
-    pluckAttribute: function (item, string) {
-      return item[string];
-    },
-
     pluckAttributeWithStringFormat: function (item, string, dontCallFunctions) {
       var parsed = Tools.parseAttributeFromString(string);
       
       if (parsed.isFunction && !dontCallFunctions) {
-        return this.pluckAttribute(item, parsed.name)();
+        return item[parsed.name]();
       }
 
-      return this.pluckAttribute(item, parsed.name);
+      return item[parsed.name];
     },
 
     getAttributeFromModelWithStringFormat: function (model, string, options) {
@@ -129,7 +125,7 @@
       var parsed = Tools.parseAttributeFromString(string);
 
       if (options.pluckAttribute) {
-        return this.pluckAttribute(model, parsed.name);
+        return model[parsed.name];
       } else if (!parsed.isFunction && !options.dontCallFunctions) {
         return model.get(parsed.name);
       }
