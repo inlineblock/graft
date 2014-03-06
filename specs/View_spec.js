@@ -316,7 +316,7 @@ define(['Graft'] , function (Graft) {
       beforeEach(function () {
         this.transcludableKlass = Graft.View.extend({
           transclude: true,
-          template: '<div class="one"></div><div class="two basket" xe-transclude></div>'
+          template: '<div class="one"></div><div class="two basket" gr-transclude></div>'
         });
         Graft.Directives.registerElement('transcludable', this.transcludableKlass);
       });
@@ -324,7 +324,7 @@ define(['Graft'] , function (Graft) {
         Graft.Directives.unregisterElement('transcludable');
       });
       it('#transcludedElements puts the elements in the basket', function () {
-        var element = Backbone.$('<span>');
+        var element = $('<span></span>');
         var view = new (this.transcludableKlass)({
           transcludedElements: element
         });
