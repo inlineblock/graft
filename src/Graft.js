@@ -110,15 +110,31 @@
       });
     },
 
+    pluckAttribute: function (item, string) {
+      return item[string];
+    },
+
     pluckAttributeWithStringFormat: function (item, string, dontCallFunctions) {
       var parsed = Tools.parseAttributeFromString(string);
+      
       if (parsed.isFunction && !dontCallFunctions) {
-        return item[parsed.name]();
-      } else if (item instanceof Backbone.Model) {
-        return item.get(string);
-      } else {
-        return item[parsed.name];
+        return this.pluckAttribute(item, parsed.name)();
       }
+
+      return this.pluckAttribute(item, parsed.name);
+    },
+
+    getAttributeFromModelWithStringFormat: function (model, string, options) {
+      options = options || {};
+      var parsed = Tools.parseAttributeFromString(string);
+
+      if (options.pluckAttribute) {
+        return this.pluckAttribute(model, parsed.name);
+      } else if (model instanceof Backbone.Model && !parsed.isFunction && !options.dontCallFunctions) {
+        return model.get(parsed.name);
+      }
+
+      return this.pluckAttributeWithStringFormat(model, string, options.dontCallFunctions);
     },
 
     pluckAttributesWithStringFormats: function (item, string) {
