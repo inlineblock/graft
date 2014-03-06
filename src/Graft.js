@@ -110,7 +110,7 @@
 
       if (options.pluckAttribute) {
         return this.pluckAttribute(model, parsed.name);
-      } else if (model instanceof Backbone.Model && !parsed.isFunction && !options.dontCallFunctions) {
+      } else if (!parsed.isFunction && !options.dontCallFunctions) {
         return model.get(parsed.name);
       }
 
