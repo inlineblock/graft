@@ -94,6 +94,8 @@
       var parsed = Tools.parseAttributeFromString(string);
       if (parsed.isFunction && !dontCallFunctions) {
         return item[parsed.name]();
+      } else if (item instanceof Backbone.Model) {
+        return item.get(string);
       } else {
         return item[parsed.name];
       }
