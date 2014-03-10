@@ -65,8 +65,8 @@
       return attributes;
     },
 
-    splitAttributeValue: function (attributeValue, keyArray) {
-      var parts = attributeValue.split(Tools._regexes.attributePart),
+    pipeSplit: function (string, keyArray) {
+      var parts = string.split(Tools._regexes.attributePart),
         splitObject = {};
       if (!keyArray) {
         return parts;
