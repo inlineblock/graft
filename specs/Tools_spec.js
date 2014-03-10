@@ -69,13 +69,6 @@ define(['Graft'], function (Graft) {
         chai.expect(Graft.Tools.pluckAttributeWithStringFormat(x, 'methodName()', true)).to.equal(x.methodName);
       });
     });
-    
-    describe('#pluckAttribute', function () {
-      it('plucks a simple attribute', function () {
-        var x = {a: 100};
-        chai.expect(Graft.Tools.pluckAttribute(x, 'a')).to.equal(x.a);
-      });
-    });
 
     describe('#getAttributeFromModelWithStringFormat', function () {
       beforeEach(function () {
