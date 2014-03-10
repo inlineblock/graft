@@ -33,6 +33,7 @@
 
     _regexes: {
       as: /^(\s+)?(\w+)( as (\w+))?(\s+)?$/,
+      attributePart: /\s+?\|\s+?/,
       isFunction: /^(\s+)?(!)?([\w]+)?(\(\))?(\s+)?$/
     },
     
@@ -62,6 +63,19 @@
         attributes[attribute.name] = attribute.value;
       }
       return attributes;
+    },
+
+    pipeSplit: function (string, keyArray) {
+      var parts = string.split(Tools._regexes.attributePart),
+        splitObject = {};
+      if (!keyArray) {
+        return parts;
+      }
+      for (var i = 0; i < keyArray.length; i++) {
+        var keyName = keyArray ? keyArray[i] : 'keyValue'+i;
+        splitObject[keyName] = parts[i];
+      }
+      return splitObject;
     },
 
     parseAs: function (string) {
