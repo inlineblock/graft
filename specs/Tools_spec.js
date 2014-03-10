@@ -69,5 +69,37 @@ define(['Graft'], function (Graft) {
         chai.expect(Graft.Tools.pluckAttributeWithStringFormat(x, 'methodName()', true)).to.equal(x.methodName);
       });
     });
+
+    describe('#splitAttributeValue splits string into key value object', function () {
+      it("with correct length", function(){
+        var threeParts = Graft.Tools.splitAttributeValue('attribute_value | model | collection', ['evaluators', 'modelName', 'collectionName']),
+          twoParts = Graft.Tools.splitAttributeValue('attribute_value | model', ['evaluators', 'modelName']),
+          onePart = Graft.Tools.splitAttributeValue('attribute_value', ['evaluators']);
+        chai.expect(_.keys(threeParts).length).to.equal(3);
+        chai.expect(_.keys(twoParts).length).to.equal(2);
+        chai.expect(_.keys(onePart).length).to.equal(1);
+      });
+      it("with correct key values", function(){
+        var parts = Graft.Tools.splitAttributeValue('attribute_value | model | collection', ['evaluators', 'modelName', 'collectionName']),
+          keys = _.keys(parts);
+        chai.expect(keys[0]).to.equal('evaluators');
+        chai.expect(keys[1]).to.equal('modelName');
+        chai.expect(keys[2]).to.equal('collectionName');
+      });
+      it("with correct values", function(){
+        var parts = Graft.Tools.splitAttributeValue('attribute_value | model | collection', ['evaluators', 'modelName', 'collectionName']),
+          values = _.values(parts);
+        chai.expect(values[0]).to.equal('attribute_value');
+        chai.expect(values[1]).to.equal('model');
+        chai.expect(values[2]).to.equal('collection');
+      });
+      it("splits without array", function(){
+        var parts = Graft.Tools.splitAttributeValue('attribute_value | model | collection'),
+
+        chai.expect(parts[0]).to.equal('attribute_valuesfe');
+        chai.expect(parts[1]).to.equal('model');
+        chai.expect(parts[2]).to.equal('collection');
+      });
+    });
   });
 });
