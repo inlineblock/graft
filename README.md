@@ -4,6 +4,8 @@ Graft is an angular directive like library for Backbone.js. Other comparisons ca
 
 Graft itself does not have any directives in it, but does provide a base View (Graft.View) that you can use and any children in its element will be evalulated for custom HTML tags or attributes.
 
+There is also a distinct different between an attribute directive (Gather.AttributeDirective) and a tag (Gather.View). An attribute directive should only modify DOM properties and data it is specifically given where as a View can create children elements and do transclusion as well modify the children.
+
 
 ## Graft.View
 ---
