@@ -241,7 +241,8 @@
       Backbone.View.apply(this , arguments);
     },
 
-    initialize: function () {
+    initialize: function (o) {
+      this.options = _.extend({}, this.options, o || {});
       this._boundRelayEvents = {};
       this._subViews = {};
       this._setup();
