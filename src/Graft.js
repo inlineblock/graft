@@ -104,9 +104,7 @@
       options = options || {};
       var parsed = Tools.parseAttributeFromString(string);
 
-      if (options.pluckAttribute) {
-        return model[parsed.name];
-      } else if (!parsed.isFunction && !options.dontCallFunctions) {
+      if (!options.pluckAttribute && !parsed.isFunction && !options.dontCallFunctions) {
         return model.get(parsed.name);
       }
 
