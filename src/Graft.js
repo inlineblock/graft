@@ -2,10 +2,30 @@
 
   // Set up just like Backbone appropriately for the environment. Start with AMD.
   if (typeof define === 'function' && define.amd) {
-    define(['backbone', 'underscore', 'jquery'], function (Backbone, _, $) {
+    var requires = [],
+      backboneIndex = -1,
+      underscoreIndex = -1,
+      jqueryIndex = -1;
+    if (!root.Backbone) {
+      requires.push('backbone');
+      backboneIndex = requires.length-1;
+    }
+    if (!root._) {
+      requires.push('underscore');
+      underscoreIndex = requires.length-1;
+    }
+    if (!root.$) {
+      requires.push('jquery');
+      jqueryIndex = requires.length-1;
+    }
+    define(requires, function () {
       // Export global even in AMD case in case this script is loaded with
       // others that may still expect a global Backbone.
-      return factory(root, Backbone, _, $);
+      return factory(root,
+                     backboneIndex   > -1 ? arguments[backboneIndex]   : root.Backbone,
+                     underscoreIndex > -1 ? arguments[underscoreIndex] : root._,
+                     jqueryIndex     > -1 ? arguments[jqueryIndex]     : root.$
+                    );
     });
 
   // Next for Node.js or CommonJS. jQuery may not be needed as a module.
@@ -90,14 +110,18 @@
       });
     },
 
+    pluckAttribute: function (item, string) {
+      return item[string];
+    },
+
     pluckAttributeWithStringFormat: function (item, string, dontCallFunctions) {
       var parsed = Tools.parseAttributeFromString(string);
       
       if (parsed.isFunction && !dontCallFunctions) {
-        return item[parsed.name]();
+        return this.pluckAttribute(item, parsed.name)();
       }
 
-      return item[parsed.name];
+      return this.pluckAttribute(item, parsed.name);
     },
 
     getAttributeFromModelWithStringFormat: function (model, string, options) {
@@ -105,8 +129,8 @@
       var parsed = Tools.parseAttributeFromString(string);
 
       if (options.pluckAttribute) {
-        return model[parsed.name];
-      } else if (!parsed.isFunction && !options.dontCallFunctions) {
+        return this.pluckAttribute(model, parsed.name);
+      } else if (model instanceof Backbone.Model && !parsed.isFunction && !options.dontCallFunctions) {
         return model.get(parsed.name);
       }
 
@@ -255,8 +279,7 @@
       Backbone.View.apply(this , arguments);
     },
 
-    initialize: function (o) {
-      this.options = _.extend({}, this.options, o || {});
+    initialize: function () {
       this._boundRelayEvents = {};
       this._subViews = {};
       this._setup();
