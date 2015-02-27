@@ -69,5 +69,34 @@ define(['Graft'], function (Graft) {
         chai.expect(Graft.Tools.pluckAttributeWithStringFormat(x, 'methodName()', true)).to.equal(x.methodName);
       });
     });
+
+    describe('#getAttributeFromModelWithStringFormat', function () {
+      beforeEach(function () {
+        this.model = new Backbone.Model({a: 100});
+        this.model['plucked'] = 5;
+        this.model['methodName'] = function () {
+          return 2;
+        };
+      });
+      afterEach(function () {
+        delete this.model;
+      });
+
+      it("returns backbone model's attribute with get", function() {
+        chai.expect(Graft.Tools.getAttributeFromModelWithStringFormat(this.model, 'a')).to.equal(this.model.get('a'));
+      });
+      it("calls function and returns value on backbone model", function() {
+        chai.expect(Graft.Tools.getAttributeFromModelWithStringFormat(this.model, 'methodName()')).to.equal(2);
+      });
+      it("returns method without calling it when dontCallFunctions option is set", function() {
+        var options = { dontCallFunctions: true };
+        chai.expect(Graft.Tools.getAttributeFromModelWithStringFormat(this.model, 'methodName()', options)).to.equal(this.model.methodName);
+      });
+      it("plucks the attribute from the model when pluckAttribute option is set", function() {
+        var options = { pluckAttribute: true }
+        chai.expect(Graft.Tools.getAttributeFromModelWithStringFormat(this.model, 'plucked', options)).to.equal(5);
+      });
+    });
+
   });
 });
